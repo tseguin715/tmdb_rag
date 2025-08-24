@@ -22,7 +22,7 @@ CREDENTIALS_FILE = "credentials.yml"
 # --- 2. PAGE SETUP ---
 st.set_page_config(page_title="AI TV & Movie Recommender", page_icon="🎬")
 st.title("🎬 AI TV & Movie Recommender")
-st.markdown("Welcome! I'm your AI-powered guide to the world of movies and TV shows. Tell me what you're looking for, or try one of the example prompts below to get started. ✨")
+st.markdown("I'm your AI-powered movie and TV show recommender. Tell me what you're looking for, or try one of the example prompts below to get started!")
 
 # --- SESSION STATE INITIALIZATION ---
 # Initialize session state for filters to ensure they are persistent and controllable.
@@ -232,7 +232,7 @@ TMDb URL: {product_url}
 ---"""
     )
 
-    qa_system_prompt = """You are an expert TV & Movie recommender. Use the following pieces of retrieved context to answer the question. Your primary goal is to be helpful and provide accurate recommendations that match the user's request and filters. If you recommend a title, you MUST use the following format to display it: [PRODUCT: image_url={{image_url}}, product_url={{product_url}}]. If no titles in the context match, say you couldn't find anything matching their criteria. Be conversational and engaging.
+    qa_system_prompt = """You are an expert TV & Movie recommender. Use the following pieces of retrieved context to answer the question. Your primary goal is to be helpful and provide accurate recommendations that match the user's request and filters. If you recommend a title, you MUST use the following format to display it: [Title of Movie or Show: image_url={{image_url}}, product_url={{product_url}}]. If no titles in the context match, say you couldn't find anything matching their criteria. Be conversational and engaging.
 
     Context:
     {context}"""
@@ -283,7 +283,8 @@ TMDb URL: {product_url}
 # --- 6. RESPONSE RENDERING ---
 def display_response_with_images(response_text):
     """Display response text with embedded images for recommended products."""
-    product_pattern = r"\[PRODUCT: image_url=(.*?), product_url=(.*?)\]"
+    # This new pattern optionally matches a title before the colon
+    product_pattern = r"\[(?:.*?:)?\s*image_url=(.*?), product_url=(.*?)\]"
     matches = list(re.finditer(product_pattern, response_text))
     
     if not matches:
