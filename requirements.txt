@@ -1,0 +1,10 @@
+faiss-cpu==1.12.0
+langchain==0.3.27
+langchain-chroma==0.2.5
+langchain-community==0.3.27
+langchain-core==0.3.74
+langchain-openai==0.3.30
+langchain-text-splitters==0.3.9
+langsmith==0.4.14
+PyYAML
+streamlit==1.48.1
